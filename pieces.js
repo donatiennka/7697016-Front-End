@@ -53,6 +53,17 @@ boutonTrier.addEventListener("click", function () {
     console.log(piecesOrdonnees);
 });
 
+// Ajoutons un listner au bouton "Trier par prix décroissants"
+const boutonDecroissant = document.querySelector(".btn-decroissant");
+
+boutonDecroissant.addEventListener("click", function () {
+    const piecesOrdonnees = Array.from(pieces);
+    piecesOrdonnees.sort(function (a, b) {
+        return b.prix - a.prix;
+    });
+    console.log(piecesOrdonnees);
+});
+
 //Ajoutons un listner sur le bouton Filtrer... pour n'afficher que les pièces dont le prix
 // est inférieur ou égal à 35 FCFA
 const boutonFiltrer = document.querySelector(".btn-filtrer");
@@ -64,3 +75,39 @@ boutonFiltrer.addEventListener("click", function () {
 
     console.log(piecesFiltrees)
 });
+
+// Filtrons pour n'afficher que les pièces qui ont un descriptif
+const boutonNoDescription = document.querySelector(".btn-nodesc");
+
+boutonNoDescription.addEventListener("click", function () {
+    const piecesFiltrees = pieces.filter(function (piece) {
+        return piece.description;
+    });
+
+    console.log(piecesFiltrees)
+});
+
+// Nous décidons d'afficher uniquement les noms des pièces
+const noms = pieces.map(piece => piece.nom);
+console.log(noms);
+
+// Maintenant noussuprimons de la liste des noms les pièces qui ne sont pas abordables
+for(let i = pieces.length - 1; i >= 0; i--) {
+    if (pieces[i].prix > 35) {
+        noms.splice(i, 1)
+    }
+}
+console.log(noms);
+
+// Nous pouvons afficher la liste des pièces abordables dans une liste à puce
+// Création de la liste
+const abordablesElements = document.createElement("ul");
+// Ajout de chaque nom à la liste
+for (let i = 0; i < noms.length; i++) {
+    const nomElement = document.createElement("li");
+    nomElement.innerText = noms[i];
+    abordablesElements.appendChild(nomElement)
+}
+// Ajout de l'en-tête puis de la liste au bloc résultats filtres
+document.querySelector(".abordables")
+    .appendChild(abordablesElements)
