@@ -91,7 +91,7 @@ boutonNoDescription.addEventListener("click", function () {
 const noms = pieces.map(piece => piece.nom);
 console.log(noms);
 
-// Maintenant noussuprimons de la liste des noms les pièces qui ne sont pas abordables
+// Maintenant nous suprimons de la liste des noms les pièces qui ne sont pas abordables
 for(let i = pieces.length - 1; i >= 0; i--) {
     if (pieces[i].prix > 35) {
         noms.splice(i, 1)
@@ -111,3 +111,34 @@ for (let i = 0; i < noms.length; i++) {
 // Ajout de l'en-tête puis de la liste au bloc résultats filtres
 document.querySelector(".abordables")
     .appendChild(abordablesElements)
+
+
+
+
+// Nous voulons une liste des pièces disponibles
+let piecesDisponibles = []
+
+for(let i = 0; i < pieces.length; i++) {
+    if (pieces[i].disponibilite) {
+       piecesDisponibles.push(pieces[i])
+    }
+}
+console.log(piecesDisponibles);
+
+// Nous décidons d'afficher uniquement les noms des pièces disponibles avec leurs prix
+const nomsEtPrixDispo = piecesDisponibles.map(piece => `${piece.nom} - ${piece.prix} FCFA`);
+console.log(nomsEtPrixDispo);
+
+
+// Maintenant nous voulons afficher la liste des pièces disponibles dans une liste à puce
+// Création de la liste
+const disponiblesElements = document.createElement("ul");
+// Ajout de chaque nom à la liste
+for (let i = 0; i < nomsEtPrixDispo.length; i++) {
+    const nomElement = document.createElement("li");
+    nomElement.innerText = nomsEtPrixDispo[i];
+    disponiblesElements.appendChild(nomElement)
+}
+// Ajout de l'en-tête puis de la liste au bloc résultats fiches produits
+document.querySelector(".disponibles")
+    .appendChild(disponiblesElements)
